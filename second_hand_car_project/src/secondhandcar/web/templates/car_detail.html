@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Car Details: {{ car.full_description }}{% endblock %}
+
+{% block content %}
+    <h1>Car Details</h1>
+    <div class="card">
+        <div class="card-header">
+            <h2>{{ car.full_description }} (ID: {{ car.id|string|truncate(8, True, '...') }})</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Brand:</strong> {{ car.brand }}</p>
+            <p><strong>Model:</strong> {{ car.model }}</p>
+            <p><strong>Year:</strong> {{ car.year }}</p>
+            <p><strong>Price:</strong> {{ "%.2f"|format(car.price) }}</p>
+            <p><strong>KM Driven:</strong> {{ car.km_driven }}</p>
+            <p><strong>Fuel Type:</strong> {{ car.fuel_type }}</p>
+            <p><strong>Transmission:</strong> {{ car.transmission }}</p>
+            <p><strong>Owner Type:</strong> {{ car.owner_type }}</p>
+            <p><strong>Ecological Bonus Eligible:</strong> {{ 'Yes' if car.ecological_bonus_eligible else 'No' }}</p>
+            <p><strong>Status:</strong> 
+                {% if car.is_sold %}
+                    <span class="badge badge-danger">Sold</span>
+                {% elif car.is_available %}
+                    <span class="badge badge-success">Available</span>
+                {% else %}
+                    <span class="badge badge-warning">Unavailable (e.g., in repair)</span>
+                {% endif %}
+            </p>
+        </div>
+        <div class="card-footer">
+            <a href="{{ url_for('edit_car', car_id=car.id) }}" class="btn btn-primary">Edit</a>
+            <a href="{{ url_for('list_cars') }}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+{% endblock %}

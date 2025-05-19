@@ -1,0 +1,19 @@
+body {
+    font-family: sans-serif;
+    background-color: #f8f9fa;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.alert {
+    margin-top: 1rem;
+}
