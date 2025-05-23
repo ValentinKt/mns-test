@@ -1,0 +1,434 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.6;
+}
+
+.app-container {
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-content {
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Header */
+.app-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.app-title {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.app-title i {
+    margin-right: 15px;
+    color: #4A90E2;
+}
+
+/* Location Selector */
+.location-selector {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.location-dropdown {
+    appearance: none;
+    background: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 45px 12px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    min-width: 200px;
+}
+
+.location-dropdown:hover {
+    box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.location-dropdown:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
+}
+
+.dropdown-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-container:hover .dropdown-icon {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Weather Cards Container */
+.weather-cards-container {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: 1fr;
+}
+
+/* Weather Card Base */
+.weather-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.weather-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #4A90E2, #50C878);
+}
+
+.weather-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+}
+
+/* Card Header */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.card-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.location-name {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Tidal Section */
+.tidal-section {
+    margin-bottom: 30px;
+}
+
+.tidal-graph {
+    text-align: center;
+    position: relative;
+}
+
+.tidal-curve {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.coefficient-display {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #4A90E2;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
+}
+
+.tide-wave {
+    width: 100%;
+    height: 120px;
+    margin: 20px 0;
+}
+
+.tide-times {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.tide-time {
+    text-align: center;
+    flex: 1;
+}
+
+.tide-time .time {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.tide-time .type {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: capitalize;
+}
+
+/* Weather Info */
+.weather-info {
+    display: grid;
+    gap: 15px;
+}
+
+.weather-info:not(.mobile):not(.compact) {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.weather-info.compact {
+    gap: 10px;
+}
+
+.weather-row {
+    display: flex;
+    gap: 20px;
+}
+
+.weather-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.weather-item:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+}
+
+.weather-item i {
+    color: #4A90E2;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.weather-item span {
+    font-weight: 500;
+    color: #333;
+}
+
+/* Mobile specific styles */
+.weather-info.mobile .weather-item {
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.tidal-graph.mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.tide-times.mobile {
+    width: 100%;
+}
+
+/* Responsive Design */
+.desktop-card {
+    display: block;
+}
+
+.tablet-card,
+.mobile-card {
+    display: none;
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .desktop-card,
+    .mobile-card {
+        display: none;
+    }
+    
+    .tablet-card {
+        display: block;
+    }
+    
+    .app-title {
+        font-size: 2rem;
+    }
+    
+    .coefficient-display {
+        font-size: 2.5rem;
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .desktop-card,
+    .tablet-card {
+        display: none;
+    }
+    
+    .mobile-card {
+        display: block;
+    }
+    
+    .app-container {
+        padding: 15px;
+    }
+    
+    .app-title {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+    
+    .weather-card {
+        padding: 20px;
+    }
+    
+    .coefficient-display {
+        font-size: 2rem;
+    }
+    
+    .location-dropdown {
+        min-width: 250px;
+        font-size: 0.9rem;
+    }
+    
+    .weather-info.mobile {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+/* No data state */
+.no-data {
+    text-align: center;
+    color: white;
+    padding: 60px 20px;
+}
+
+.no-data i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+.no-data h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.no-data p {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #4A90E2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.weather-card {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus styles for better accessibility */
+.location-dropdown:focus,
+.weather-item:focus {
+    outline: 2px solid #4A90E2;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .weather-card {
+        border: 2px solid #333;
+    }
+    
+    .weather-item {
+        border: 1px solid #666;
+    }
+}

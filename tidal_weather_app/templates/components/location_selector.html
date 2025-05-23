@@ -1,0 +1,21 @@
+<div class="location-selector">
+    <div class="location-input-container">
+        <input type="text" id="location-search" placeholder="Search for a city..." aria-label="Search for a city">
+        <select id="location-dropdown" role="combobox" aria-expanded="false" aria-controls="location-options">
+            {% for location in locations %}
+            <option value="{{ location.id }}" {% if location.id == selected_location.id %}selected{% endif %}>
+                {{ location.name }}
+            </option>
+            {% endfor %}
+        </select>
+        <svg class="dropdown-icon" aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M7,10L12,15L17,10H7Z" />
+        </svg>
+    </div>
+    <div id="location-info" class="location-info">
+        <span class="location-name">{{ selected_location.name }}</span>
+        {% if selected_location.description %}
+        <span class="location-description">{{ selected_location.description }}</span>
+        {% endif %}
+    </div>
+</div>

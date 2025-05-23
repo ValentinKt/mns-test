@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main-content">
+    <header class="app-header">
+        <h1 class="app-title">
+            <i class="fas fa-water"></i>
+            Tidal Coefficients and Marine Weather
+        </h1>
+        
+        <!-- Location Selector -->
+        <div class="location-selector">
+            <div class="dropdown-container">
+                <select id="locationSelect" class="location-dropdown" onchange="changeLocation(this.value)">
+                    {% for location in locations %}
+                        <option value="{{ location.id }}" 
+                                {% if selected_location and location.id == selected_location.id %}selected{% endif %}>
+                            {{ location.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+            </div>
+        </div>
+    </header>
+
+    {% if selected_location and weather_data %}
+    <div class="weather-cards-container">
+        <!-- Desktop Card -->
+        <div class="weather-card desktop-card">
+            <div class="card-header">
+                <h2>Today</h2>
+                <span class="location-name">{{ selected_location.name }}</span>
+            </div>
+            
+            <!-- Tidal Graph -->
+            <div class="tidal-section">
+                <div class="tidal-graph">
+                    <div class="tidal-curve">
+                        <div class="coefficient-display">57</div>
+                        <svg viewBox="0 0 300 120" class="tide-wave">
+                            <path d="M0,60 Q75,20 150,60 T300,60" stroke="#4A90E2" stroke-width="3" fill="none"/>
+                            <circle cx="75" cy="40" r="4" fill="#4A90E2"/>
+                            <circle cx="225" cy="40" r="4" fill="#4A90E2"/>
+                        </svg>
+                    </div>
+                    <div class="tide-times">
+                        <div class="tide-time">
+                            <span class="time">03:45 AM</span>
+                            <span class="type">High tide</span>
+                        </div>
+                        <div class="tide-time">
+                            <span class="time">04:11 PM</span>
+                            <span class="type">Low tide</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weather Info -->
+            <div class="weather-info">
+                <div class="weather-item">
+                    <i class="fas fa-thermometer-half"></i>
+                    <span>{{ weather_data.temperature or '18°C' }}</span>
+                </div>
+                <div class="weather-item">
+                    <i class="fas fa-cloud"></i>
+                    <span>{{ weather_data.condition or 'Cloudy' }}</span>
+                </div>
+                <div class="weather-item">
+                    <i class="fas fa-sun"></i>
+                    <span>10.15 AM</span>
+                </div>
+                <div class="weather-item">
+                    <i class="fas fa-wind"></i>
+                    <span>{{ weather_data.wind_speed or '12' }} km/h</span>
+                </div>
+                <div class="weather-item">
+                    <i class="fas fa-moon"></i>
+                    <span>10.24 PM</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tablet Card -->
+        <div class="weather-card tablet-card">
+            <div class="card-header">
+                <h2>Today</h2>
+                <span class="location-name">{{ selected_location.name }}</span>
+            </div>
+            
+            <div class="tidal-section">
+                <div class="tidal-graph">
+                    <div class="tidal-curve">
+                        <div class="coefficient-display">{{ tidal_data.coefficient if tidal_data else 'N/A' }}</div>
+                        <svg viewBox="0 0 250 100" class="tide-wave">
+                            <path d="M0,50 Q62.5,15 125,50 T250,50" stroke="#4A90E2" stroke-width="3" fill="none"/>
+                        </svg>
+                    </div>
+                    <div class="tide-times">
+                        <div class="tide-time">
+                            <span class="time">{{ tidal_data.high_tide_time if tidal_data else 'N/A' }}</span>
+                            <span class="type">High tide</span>
+                        </div>
+                        <div class="tide-time">
+                            <span class="time">{{ tidal_data.low_tide_time if tidal_data else 'N/A' }}</span>
+                            <span class="type">Low tide</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weather-info compact">
+                <div class="weather-row">
+                    <div class="weather-item">
+                        <i class="fas fa-thermometer-half"></i>
+                        <span>{{ weather_data.temperature if weather_data else 'N/A' }}°C</span>
+                    </div>
+                    <div class="weather-item">
+                        <i class="fas fa-cloud"></i>
+                        <span>{{ weather_data.condition if weather_data else 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="weather-row">
+                    <div class="weather-item">
+                        <i class="fas fa-sun"></i>
+                        <span>{{ weather_data.sunrise if weather_data and weather_data.sunrise else 'N/A' }}</span>
+                    </div>
+                    <div class="weather-item">
+                        <i class="fas fa-wind"></i>
+                        <span>{{ weather_data.wind_speed if weather_data else 'N/A' }} km/h</span>
+                    </div>
+                </div>
+                <div class="weather-row">
+                    <div class="weather-item">
+                        <i class="fas fa-moon"></i>
+                        <span>{{ weather_data.sunset if weather_data and weather_data.sunset else 'N/A' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Card -->
+        <div class="weather-card mobile-card">
+            <div class="card-header">
+                <h2>Today</h2>
+                <span class="location-name">{{ selected_location.name }}</span>
+            </div>
+            
+            <div class="tidal-section">
+                <div class="tidal-graph mobile">
+                    <div class="coefficient-display">{{ tidal_data.coefficient if tidal_data else 'N/A' }}</div>
+                    <div class="tide-times mobile">
+                        <div class="tide-time">
+                            <span class="time">{{ tidal_data.high_tide_time if tidal_data else 'N/A' }}</span>
+                            <span class="type">High tide</span>
+                        </div>
+                        <div class="tide-time">
+                            <span class="time">{{ tidal_data.low_tide_time if tidal_data else 'N/A' }}</span>
+                            <span class="type">Low tide</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weather-info mobile">
+                <div class="weather-item">
+                    <i class="fas fa-thermometer-half"></i>
+                    <span>{{ weather_data.temperature if weather_data else 'N/A' }}°C</span>
+                    <i class="fas fa-cloud"></i>
+                    <span>{{ weather_data.condition if weather_data else 'N/A' }}</span>
+                </div>
+                <div class="weather-item">
+                    <i class="fas fa-sun"></i>
+                    <span>{{ weather_data.sunrise if weather_data and weather_data.sunrise else 'N/A' }}</span>
+                    <i class="fas fa-wind"></i>
+                    <span>{{ weather_data.wind_speed if weather_data else 'N/A' }} km/h</span>
+                </div>
+                <div class="weather-item">
+                    <i class="fas fa-moon"></i> <!-- Assuming this is for sunset on mobile -->
+                    <span>{{ weather_data.sunset if weather_data and weather_data.sunset else 'N/A' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="no-data">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>No weather data available</h3>
+        <p>Please select a location or try again later.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
