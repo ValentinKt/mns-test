@@ -12,8 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / 'data' / 'cities.db'
 
 # API settings
-OPENWEATHERMAP_API_KEY = os.environ.get('OPENWEATHERMAP_API_KEY', '')
-USE_API_FIRST = os.environ.get('USE_API_FIRST', 'false').lower() == 'true'
+USE_API_FIRST = False
 
 # Request settings
 MAX_RETRIES = 3
