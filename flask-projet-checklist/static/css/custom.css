@@ -1,0 +1,66 @@
+/* Custom animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Custom checkbox styling */
+input[type="checkbox"] {
+    transition: all 0.2s ease;
+}
+
+/* Glow effect for interactive elements */
+.glow-on-hover:hover {
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
+}
+
+/* Smooth transitions for all interactive elements */
+a, button, input, label {
+    transition: all 0.2s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* Dark mode enhancements */
+.dark ::-webkit-scrollbar-track {
+    background: #2d3748;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #4a5568;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #718096;
+}

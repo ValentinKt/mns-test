@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800">
+                <span class="bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent">
+                    Mes Checklists
+                </span>
+            </h1>
+            <p class="text-gray-500 mt-1">Gérez vos modèles de checklists</p>
+        </div>
+        <a href="{{ url_for('create_template') }}" 
+           class="bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center space-x-2 group">
+            <i class="fas fa-plus-circle group-hover:scale-110 transition-transform"></i>
+            <span>Nouveau modèle</span>
+        </a>
+    </div>
+
+    {% if not templates %}
+    <div class="bg-white rounded-xl p-8 text-center shadow-sm border border-gray-100 animate-fade-in">
+        <div class="mx-auto w-24 h-24 bg-primary-50 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-list-check text-3xl text-primary-500"></i>
+        </div>
+        <h3 class="text-xl font-medium text-gray-800 mb-2">Aucun modèle disponible</h3>
+        <p class="text-gray-500 mb-4">Commencez par créer votre première checklist</p>
+        <a href="{{ url_for('create_template') }}" 
+           class="inline-flex items-center text-primary-600 hover:text-primary-800 font-medium">
+            Créer maintenant <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+    </div>
+    {% else %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for template in templates %}
+        <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden animate-fade-in hover:-translate-y-1 transition-transform duration-300">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">{{ template.name }}</h3>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                        {{ template['items']|length }} items
+                    </span>
+                </div>
+                
+                <ul class="space-y-2 mb-6">
+                    {% for item in template['items'][:3] %}
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-primary-400 mt-0.5 mr-2 text-sm"></i>
+                        <span class="text-gray-600">{{ item.content }}</span>
+                    </li>
+                    {% endfor %}
+                    {% if template['items']|length > 3 %}
+                    <li class="text-sm text-gray-400">
+                        + {{ template['items']|length - 3 }} autres éléments...
+                    </li>
+                    {% endif %}
+                </ul>
+                
+                <div class="flex space-x-3">
+                    <a href="{{ url_for('fill_checklist', template_id=template.id) }}" 
+                       class="flex-1 bg-primary-500/10 hover:bg-primary-500/20 text-primary-600 px-4 py-2 rounded-lg transition flex items-center justify-center space-x-2">
+                        <i class="fas fa-pen"></i>
+                        <span>Remplir</span>
+                    </a>
+                    <button class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

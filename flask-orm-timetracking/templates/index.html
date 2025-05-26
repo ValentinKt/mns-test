@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% block content %}
+<div class="container animate__animated animate__fadeIn">
+  <div class="dark-card glass-card">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1><i class="fas fa-chart-line text-primary"></i> TimeTrack - Welcome <span id="username" class="text-primary"></span> <i class="fas fa-hand-wave text-primary"></i></h1>
+      <button id="logout" class="dark-btn dark-btn-danger">
+        <i class="fas fa-sign-out-alt"></i> Se déconnecter
+      </button>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-6 mb-4">
+      <h3 class="section-title"><i class="fas fa-history"></i> Historique des sessions</h3>
+      <div id="sessionList" class="sessions-container">
+        <!-- Sessions will be populated by JavaScript -->
+      </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+      <h3 class="section-title"><i class="fas fa-tags"></i> Activités disponibles</h3>
+      <div id="activityList" class="activities-container">
+        <!-- Activities will be populated by JavaScript -->
+      </div>
+      
+      <div class="dark-card mt-4">
+        <form id="activityForm">
+          <div class="d-flex">
+            <input type="text" class="dark-input flex-grow-1 me-3" id="newActivity" placeholder="Nouvelle activité">
+            <button class="dark-btn dark-btn-success" type="submit">
+              <i class="fas fa-plus"></i> Ajouter
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="dark-card glass-card mt-4">
+    <h3 class="section-title mb-4"><i class="fas fa-plus-circle"></i> Nouvelle session</h3>
+    <form id="sessionForm" class="row g-3">
+      <div class="col-md-6">
+        <label for="activity" class="form-label"><i class="fas fa-tasks text-primary"></i> Activité</label>
+        <select class="dark-input w-100" id="activity">
+          <option value="">Sélectionner une activité</option>
+          <!-- Options will be populated by JavaScript -->
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="duration" class="form-label"><i class="fas fa-clock text-primary"></i> Durée (minutes)</label>
+        <input type="number" class="dark-input w-100" id="duration" placeholder="Durée (min)" />
+      </div>
+      <div class="col-12 mt-4">
+        <button class="dark-btn dark-btn-primary" type="submit">
+          <i class="fas fa-save"></i> Enregistrer
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %} {% block scripts %}
+<script src="/static/js/app.js"></script>
+{% endblock %}

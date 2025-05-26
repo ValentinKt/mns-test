@@ -1,0 +1,22 @@
+body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #e7f1ff;
+    color: #0c63e4;
+}
+
+.list-group-item label {
+    cursor: pointer;
+    width: 100%;
+}
+
+.form-check-input {
+    margin-top: 0.3em;
+}

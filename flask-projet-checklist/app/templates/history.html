@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800">
+                <span class="bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent">
+                    Historique
+                </span>
+            </h1>
+            <p class="text-gray-500">Vos checklists complétées</p>
+        </div>
+        <div class="flex items-center space-x-2 bg-gray-100 rounded-full px-3 py-1.5">
+            <i class="fas fa-filter text-gray-500"></i>
+            <span class="text-sm font-medium">Tous</span>
+        </div>
+    </div>
+
+    {% if not history %}
+    <div class="bg-white rounded-xl p-8 text-center shadow-sm border border-gray-100 animate-fade-in">
+        <div class="mx-auto w-24 h-24 bg-primary-50 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-history text-3xl text-primary-500"></i>
+        </div>
+        <h3 class="text-xl font-medium text-gray-800 mb-2">Aucune activité récente</h3>
+        <p class="text-gray-500 mb-4">Commencez par remplir une checklist</p>
+        <a href="{{ url_for('index') }}" 
+           class="inline-flex items-center text-primary-600 hover:text-primary-800 font-medium">
+            Voir les modèles <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+    </div>
+    {% else %}
+    <div class="space-y-6">
+        {% for entry in history %}
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-fade-in hover:shadow-md transition group relative">
+            <!-- Bouton de suppression (nouveau) -->
+            <form action="{{ url_for('delete_history', checklist_id=entry.id) }}" method="POST" 
+                  class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                  onsubmit="return confirm('Supprimer cette entrée d\'historique?')">
+                <button type="submit" class="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-50 transition">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </form>
+
+            <div class="p-5 border-b border-gray-100">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600">
+                            <i class="fas fa-list-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-gray-800">{{ entry.template.name }}</h3>
+                            <p class="text-sm text-gray-500">
+                                <i class="far fa-clock mr-1"></i>
+                                {{ entry.timestamp|datetimeformat }}
+                            </p>
+                        </div>
+                    </div>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium 
+                              {% if entry['checked_items']|length == entry['template']['items']|length %}bg-green-100 text-green-800
+                              {% elif entry['checked_items']|length > 0 %}bg-blue-100 text-blue-800
+                              {% else %}bg-gray-100 text-gray-800{% endif %}">
+                        {{ entry['checked_items']|length }}/{{  entry['template']['items']|length }} complétés
+                    </span>
+                </div>
+            </div>
+            
+            <div class="p-5">
+                <div class="space-y-3 mb-5">
+                    {% for item in entry['template']['items'] %}
+                    <div class="flex items-start">
+                        <div class="mr-3 mt-0.5">
+                            {% if item['checked'] %} 
+                            <i class="fas fa-check-circle text-green-500"></i>
+                            {% else %}
+                            <i class="fas fa-times-circle text-red-400"></i>
+                            {% endif %}
+                        </div>
+                        <div class="{% if item['checked'] %}text-gray-500{% else %}text-gray-800{% endif %}">
+                            {{ item.content }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                {% if entry['comment'] %}
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg">
+                    <div class="flex items-start">
+                        <i class="fas fa-comment-dots text-yellow-500 mt-0.5 mr-2"></i>
+                        <div>
+                            <h4 class="text-sm font-medium text-yellow-800 mb-1">Commentaire</h4>
+                            <p class="text-sm text-yellow-700">{{ entry.comment }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

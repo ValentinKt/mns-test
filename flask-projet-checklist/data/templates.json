@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "Model1",
+    "items": [
+      "Item1",
+      "Item2"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Model2",
+    "items": [
+      "test1",
+      "test2"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Model3",
+    "items": [
+      "Un",
+      "Deux",
+      "Trois"
+    ]
+  }
+]

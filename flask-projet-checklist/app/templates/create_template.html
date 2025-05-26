@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="bg-blue-600 text-white px-6 py-4">
+            <h2 class="text-xl font-bold">
+                <i class="fas fa-file-circle-plus mr-2"></i>Créer un nouveau modèle
+            </h2>
+        </div>
+        
+        <div class="p-6">
+            <form method="POST" class="space-y-6">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nom du modèle</label>
+                    <input type="text" id="name" name="name" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                
+                <div>
+                    <label for="items" class="block text-sm font-medium text-gray-700 mb-1">Items (un par ligne)</label>
+                    <textarea id="items" name="items" rows="8" required
+                              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 font-mono"></textarea>
+                    <p class="mt-1 text-sm text-gray-500">Séparez chaque item par un retour à la ligne</p>
+                </div>
+                
+                <div class="flex justify-end space-x-3">
+                    <a href="{{ url_for('index') }}" 
+                       class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg transition">
+                        Annuler
+                    </a>
+                    <button type="submit" 
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition flex items-center">
+                        <i class="fas fa-save mr-2"></i>Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

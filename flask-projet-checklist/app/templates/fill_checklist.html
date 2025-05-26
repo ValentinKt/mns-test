@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">
+            <span class="bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent">
+                Remplir la checklist
+            </span>
+        </h1>
+        <p class="text-gray-500 mt-1">{{ template.name }}</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+        <form id="checklist-form" class="space-y-6">
+            <div class="space-y-4">
+                {% for item in template.items %}
+                <div class="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                    <input type="checkbox" id="item-{{ item.id }}" name="checked_items" value="{{ item.id }}" 
+                           class="h-5 w-5 rounded border-gray-300 text-primary-600 focus:ring-primary-500 mt-0.5">
+                    <label for="item-{{ item.id }}" class="text-gray-700">{{ item.content }}</label>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="border-t border-gray-200 pt-6">
+                <label for="comment" class="block text-sm font-medium text-gray-700 mb-2">Commentaire (optionnel)</label>
+                <textarea id="comment" name="comment" rows="3" 
+                          class="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+            </div>
+
+            <div class="flex justify-end space-x-3">
+                <a href="{{ url_for('index') }}" 
+                   class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                    Annuler
+                </a>
+                <button type="button" id="submit-button"
+                        class="inline-flex justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                    Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.getElementById('submit-button').addEventListener('click', function() {
+    // Gather form data
+    const form = document.getElementById('checklist-form');
+    
+    // Get checked items
+    const checkedItems = [];
+    document.querySelectorAll('input[name="checked_items"]:checked').forEach(checkbox => {
+        checkedItems.push(parseInt(checkbox.value));
+    });
+    
+    // Get comment
+    const comment = document.getElementById('comment').value;
+    
+    // Create JSON data
+    const jsonData = {
+        template_id:  template.id,
+        checked_items: checkedItems,
+        comment: comment
+    };
+    
+    // Send as JSON
+    fetch('{{ url_for("fill_checklist", template_id=template.id) }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = '{{ url_for("history") }}';
+        } else {
+            response.json().then(data => {
+                alert('Error: ' + (data.message || 'Failed to save checklist'));
+            }).catch(() => {
+                alert('Error: Failed to save checklist');
+            });
+        }
+    })
+    .catch(error => {
+        alert('Error: ' + error.message);
+    });
+});
+</script>
+{% endblock %}

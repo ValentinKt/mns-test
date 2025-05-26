@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="dark-card glass-card animate__animated animate__fadeInDown">
+        <div class="text-center mb-4">
+          <h2 class="text-primary"><i class="fas fa-chart-line"></i> TimeTrack</h2>
+          <h3 class="mt-4 mb-3"><i class="fas fa-lock text-primary"></i> Connexion</h3>
+          <p class="text-muted">(login / password par défaut : mns)</p>
+        </div>
+        
+        <form id="loginForm">
+          <div class="mb-4">
+            <div class="d-flex align-items-center mb-2">
+              <i class="fas fa-user text-primary me-2"></i>
+              <label for="username">Nom d'utilisateur</label>
+            </div>
+            <input type="text" class="dark-input w-100" id="username" placeholder="Entrez votre nom d'utilisateur" />
+          </div>
+          <div class="mb-4">
+            <div class="d-flex align-items-center mb-2">
+              <i class="fas fa-key text-primary me-2"></i>
+              <label for="password">Mot de passe</label>
+            </div>
+            <input type="password" class="dark-input w-100" id="password" placeholder="Entrez votre mot de passe" />
+          </div>
+          <div class="d-grid mt-4">
+            <button class="dark-btn dark-btn-primary" type="submit">
+              <i class="fas fa-sign-in-alt"></i> Se connecter
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block scripts %}
+<script src="/static/js/login.js"></script>
+{% endblock %}

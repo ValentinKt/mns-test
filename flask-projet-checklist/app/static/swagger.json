@@ -1,0 +1,50 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Checklist API",
+    "description": "API for managing templates and checklists",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/templates": {
+      "get": {
+        "tags": ["Templates"],
+        "summary": "Get all templates",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Templates"],
+        "summary": "Create a new template",
+        "responses": {
+          "201": {
+            "description": "Template created successfully"
+          }
+        }
+      }
+    },
+    "/api/checklists": {
+      "get": {
+        "tags": ["Checklists"],
+        "summary": "Get all checklists",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Checklists"],
+        "summary": "Create a new checklist",
+        "responses": {
+          "201": {
+            "description": "Checklist created successfully"
+          }
+        }
+      }
+    }
+  }
+}
