@@ -47,9 +47,31 @@ class TidalAPIService:
         
         # Fall back to mock data if scraping fails or city_name not provided
         logger.warning(f"Could not scrape tidal data for location {location_id}, using mock data")
-        return self._get_mock_tidal_data()
+        return self.get_mock_tidal_data()
 
-    def calculate_tidal_coefficient(sun_distance, moon_distance):
+    def get_mock_tidal_data(self):
+        """
+        Returns mock tidal data.
+        """
+        # Mock tidal data for demonstration purposes
+        logger.info("Returning mock tidal data")
+        tidal_data = {
+            "location_id": 1,
+            "date": date.today().isoformat(),
+            "high_tides": [
+                {"time": "06:00", "height": 2.5},
+                {"time": "18:00", "height": 2.7}
+            ],
+            "low_tides": [
+                {"time": "12:00", "height": 0.5},
+                {"time": "00:00", "height": 0.3}
+            ],
+            "tidal_coefficient": 80
+        }
+        cache_data(f"tidal_{tidal_data['location_id']}_{date.today().isoformat()}", tidal_data)
+        return tidal_data
+
+    def calculate_tidal_coefficient(self, sun_distance, moon_distance):
         """
         Calculate the tidal coefficient based on the distances of the Sun and Moon from Earth.
         
@@ -78,7 +100,7 @@ class TidalAPIService:
         tidal_coefficient = calculate_tidal_coefficient(sun_distance, moon_distance)
         print(f"Tidal Coefficient: {tidal_coefficient}")
 
-    def fetch_marine_weather_data(latitude, longitude):
+    def fetch_marine_weather_data(self, latitude, longitude):
         """
         Fetch marine weather data from the Open-Meteo API.
         

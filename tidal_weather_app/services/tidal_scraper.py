@@ -78,13 +78,13 @@ class TidalScraperService:
                 logger.error(f"Could not find tide table for {city_name}")
                 return None
             
-            rows = tide_table.find_all('tr')[1:]  # Skip header row
+            rows = soup.find_all('tr')[1:]  # Skip header row
             
             high_tides = []
             low_tides = []
             
             for row in rows:
-                columns = row.find_all('td')
+                columns = soup.find_all('td')
                 if len(columns) >= 3:
                     tide_type = columns[0].text.strip()
                     tide_time = columns[1].text.strip()

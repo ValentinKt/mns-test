@@ -1,20 +1,21 @@
 from datetime import datetime, timezone, date as dt_date
-from models import get_db_connection
+from ..database.connection import Connection
 
 class Location:
     """Model for storing location information."""
     
     def __init__(self, id=None, name=None, latitude=None, longitude=None, 
-                 description=None, timezone="UTC", created_at=None, updated_at=None):
+                 description=None, created_at=None, updated_at=None):
         self.id = id
         self.name = name
         self.latitude = latitude
         self.longitude = longitude
         self.description = description
-        self.timezone = timezone
+        self.timezone = timezone.utc
         self.created_at = created_at or datetime.now(timezone.utc)
         self.updated_at = updated_at or datetime.now(timezone.utc)
-    
+        self.conn = Connection.get_db_connection()
+
     def __repr__(self):
         return f'<Location {self.name}>'
     
@@ -48,7 +49,6 @@ class Location:
     @classmethod
     def get_by_id(cls, location_id):
         """Get a location by ID."""
-        conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM locations WHERE id = ?", (location_id,))
         row = cursor.fetchone()

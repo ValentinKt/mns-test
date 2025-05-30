@@ -56,14 +56,11 @@ class WeatherService:
         self.request_count = 0
         self.error_count = 0
         self.last_request_time = 0
+        self.conn =  
         
       
 
-    def get_db_connection(self):
-        """Get a connection to the SQLite database."""
-        conn = sqlite3.connect(self.db_path)
-        conn.row_factory = sqlite3.Row
-        return conn
+
     
     def search_cities(self, name, country=None, limit=10):
         """
